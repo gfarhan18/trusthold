@@ -6,42 +6,41 @@ import { useState } from "react";
 import { FaAngleDown, FaBars, FaEnvelope, FaFacebook } from "react-icons/fa";
 
 interface MenuItem {
-    label: string;
-    href: string;
-    dropdownItems?: { label: string; href: string }[];
-  }
-  
-  const menuItems: MenuItem[] = [
-    { label: "About", href: "#" },
-    { label: "Services", href: "#" },
-    {
-      label: "Projects",
-      href: "#",
-      dropdownItems: [
-        { label: "Spears 1858", href: "#" },
-        { label: "Rubik 1709", href: "#" },
-        { label: "Loft 705", href: "#" },
-        { label: "Spears 88", href: "#" },
+  label: string;
+  href: string;
+  dropdownItems?: { label: string; href: string }[];
+}
 
-      ],
-    },
-    { label: "Media", href: "#" },
-    { label: "News", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Contact us", href: "#" },
-  ];
-  
+const menuItems: MenuItem[] = [
+  { label: "About", href: "#" },
+  { label: "Services", href: "#" },
+  {
+    label: "Projects",
+    href: "#",
+    dropdownItems: [
+      { label: "Spears 1858", href: "#" },
+      { label: "Rubik 1709", href: "#" },
+      { label: "Loft 705", href: "#" },
+      { label: "Spears 88", href: "#" },
+    ],
+  },
+  { label: "Media", href: "#" },
+  { label: "News", href: "#" },
+  { label: "Careers", href: "#" },
+  { label: "Contact us", href: "#" },
+];
+
 const Navbar: React.FC = () => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
-    const toggleMobileMenu = () => {
-      setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
-  
-    const toggleDropdown = () => {
-      setIsDropdownOpen(!isDropdownOpen);
-    };
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
   return (
     <nav className=" bg-red-700 text-gray-200">
@@ -66,34 +65,39 @@ const Navbar: React.FC = () => {
 
         {/* NAVIGATION - LARGE SCREENS */}
         <div className="hidden md:flex space-x-4">
-            {menuItems.map((item, index) => (
-              <div
-                key={index}
-                className="relative"
-                onMouseEnter={() => item.label === "Projects" && toggleDropdown()}
-                onMouseLeave={() => item.label === "Projects" && toggleDropdown()}
+          {menuItems.map((item, index) => (
+            <div
+              key={index}
+              className="relative"
+              onMouseEnter={() => item.label === "Projects" && toggleDropdown()}
+              onMouseLeave={() => item.label === "Projects" && toggleDropdown()}
+            >
+              <Link
+                href={item.href}
+                className="text-sm flex items-center transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500"
+                style={{ textUnderlineOffset: "8px" }}
               >
-                <Link
-                  href={item.href}
-                  className="text-sm flex items-center transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500"
-                  style={{ textUnderlineOffset: "8px" }}
-                >
-                  {item.label}{item.label === "Projects" && (
+                {item.label}
+                {item.label === "Projects" && (
                   <FaAngleDown className="ml-1 text-sm" /> // Add the dropdown icon
                 )}
-                </Link>
-                {item.label === "Projects" && isDropdownOpen && (
-                  <div className="absolute top-full left-0 w-40 bg-white rounded-lg shadow-lg py-2 z-10">
-                    {item.dropdownItems?.map((dropdownItem, i) => (
-                      <Link key={i} href={dropdownItem.href} className="text-sm block px-4 text-gray-900 py-2 hover:bg-red-700 hover:text-white">
-                        {dropdownItem.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+              </Link>
+              {item.label === "Projects" && isDropdownOpen && (
+                <div className="absolute top-full left-0 w-40 bg-white rounded-lg shadow-lg py-2 z-10">
+                  {item.dropdownItems?.map((dropdownItem, i) => (
+                    <Link
+                      key={i}
+                      href={dropdownItem.href}
+                      className="text-sm block px-4 text-gray-900 py-2 hover:bg-red-700 hover:text-white"
+                    >
+                      {dropdownItem.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
 
         <div className="hidden md:flex mr-10">
           <Link href="https://www.facebook.com/TrustholdGroup" target="_blank">
