@@ -47,12 +47,12 @@ const Navbar: React.FC = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center pl-8">
           <Link href="/">
-            <Image src="/logo.png" alt="Logo" width={200} height={200} />
+            <Image src="/logo.png" alt="Logo" width={250} height={60} />
           </Link>
         </div>
 
         {/* MOBILE NAV ICON */}
-        <div className="md:hidden block absolute top-4 right-8 fixed">
+        <div className="md:hidden block absolute top-4 right-8">
           <button
             aria-label="navigation"
             type="button"
@@ -74,10 +74,11 @@ const Navbar: React.FC = () => {
             >
               <Link
                 href={item.href}
-                className="text-sm flex items-center transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500"
+                className="text-sm flex items-center transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500 relative"
                 style={{ textUnderlineOffset: "8px" }}
               >
                 {item.label}
+                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-yellow-500 transition-transform origin-left transform scale-x-0 group-hover:scale-x-100"></div>
                 {item.label === "Projects" && (
                   <FaAngleDown className="ml-1 text-sm" /> // Add the dropdown icon
                 )}
@@ -101,10 +102,10 @@ const Navbar: React.FC = () => {
 
         <div className="hidden md:flex mr-10">
           <Link href="https://www.facebook.com/TrustholdGroup" target="_blank">
-            <FaFacebook className="text-3xl pr-3 transition duration-300 focus:text-yellow-500 hover:text-yellow-500 mr-6" />
+            <FaFacebook className="text-2xl pr-3 transition duration-300 focus:text-yellow-500 hover:text-yellow-500 mr-6" />
           </Link>
           <Link href="mailto:info@trustholdgroup.com">
-            <FaEnvelope className="text-3xl pr-3 transition duration-300 focus:text-yellow-500 hover:text-yellow-500" />
+            <FaEnvelope className="text-2xl pr-3 transition duration-300 focus:text-yellow-500 hover:text-yellow-500" />
           </Link>
         </div>
       </div>
