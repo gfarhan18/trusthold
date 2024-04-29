@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
           </ul>
         </div>
 
-        <div className="hidden md:flex">
+        <div className="hidden md:flex mr-10">
           <Link href="/">
             <FaFacebook className="text-3xl pr-3 transition duration-300 focus:text-yellow-500 hover:text-yellow-500" />
           </Link>
