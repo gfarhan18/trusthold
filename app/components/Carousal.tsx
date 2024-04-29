@@ -2,7 +2,7 @@
 "use client";
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChevronCircleLeft, FaChevronCircleRight, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 
 interface Slide {
@@ -36,7 +36,7 @@ interface Slide {
     };
   
   return (
-    <div className="relative h-screen">
+    <div className="relative h-[80vh]">
       {slides.map((slide, index) => (
         <div key={index} className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-100 pointer-events-none'}`}>
           <Image src={slide.src} className="w-full h-full object-cover" alt={`Slide ${index + 1}`} layout="fill"/>
@@ -49,11 +49,11 @@ interface Slide {
           </div>
         </div>
       ))}
-      <button className="absolute top-1/2 left-0 transform -translate-y-1/2 px-2 py-1 bg-gray-800 text-white rounded-l focus:outline-none" onClick={prevSlide} title='prev'>
-      <FaChevronLeft />
+      <button className="absolute top-1/2 left-0 transform -translate-y-1/2 px-2 py-1 text-white rounded-l focus:outline-none" onClick={prevSlide} title='prev'>
+      <FaChevronCircleLeft />
       </button>
-      <button className="absolute top-1/2 right-0 transform -translate-y-1/2 px-2 py-1 bg-gray-800 text-white rounded-r focus:outline-none" onClick={nextSlide} title='next'>
-      <FaChevronRight />
+      <button className="absolute top-1/2 right-0 transform -translate-y-1/2 px-2 py-1 text-white rounded-r focus:outline-none" onClick={nextSlide} title='next'>
+      <FaChevronCircleRight />
       </button>
     </div>
   );

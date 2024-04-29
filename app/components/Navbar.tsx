@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center pl-8">
           <Link href="/">
-            <Image src="/logo.png" alt="Logo" width={400} height={200} />
+            <Image src="/logo.png" alt="Logo" width={200} height={200} />
           </Link>
         </div>
 
@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* NAVIGATION - LARGE SCREENS */}
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex space-x-4">
             {menuItems.map((item, index) => (
               <div
                 key={index}
@@ -75,17 +75,17 @@ const Navbar: React.FC = () => {
               >
                 <Link
                   href={item.href}
-                  className="flex items-center transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500"
+                  className="text-sm flex items-center transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500"
                   style={{ textUnderlineOffset: "8px" }}
                 >
                   {item.label}{item.label === "Projects" && (
-                  <FaAngleDown className="ml-1 text-xl" /> // Add the dropdown icon
+                  <FaAngleDown className="ml-1 text-sm" /> // Add the dropdown icon
                 )}
                 </Link>
                 {item.label === "Projects" && isDropdownOpen && (
                   <div className="absolute top-full left-0 w-40 bg-white rounded-lg shadow-lg py-2 z-10">
                     {item.dropdownItems?.map((dropdownItem, i) => (
-                      <Link key={i} href={dropdownItem.href} className="block px-4 text-gray-900 py-2 hover:bg-red-700 hover:text-white">
+                      <Link key={i} href={dropdownItem.href} className="text-sm block px-4 text-gray-900 py-2 hover:bg-red-700 hover:text-white">
                         {dropdownItem.label}
                       </Link>
                     ))}
