@@ -3,20 +3,45 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { FaBars, FaEnvelope, FaFacebook } from "react-icons/fa";
+import { FaAngleDown, FaBars, FaEnvelope, FaFacebook } from "react-icons/fa";
 
-const menuItems = [
-    { label: "Home", href: "#" },
+interface MenuItem {
+    label: string;
+    href: string;
+    dropdownItems?: { label: string; href: string }[];
+  }
+  
+  const menuItems: MenuItem[] = [
     { label: "About", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "Contact", href: "#" },
-  ];
-const Navbar: React.FC = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    { label: "Services", href: "#" },
+    {
+      label: "Projects",
+      href: "#",
+      dropdownItems: [
+        { label: "Spears 1858", href: "#" },
+        { label: "Rubik 1709", href: "#" },
+        { label: "Loft 705", href: "#" },
+        { label: "Spears 88", href: "#" },
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+      ],
+    },
+    { label: "Media", href: "#" },
+    { label: "News", href: "#" },
+    { label: "Careers", href: "#" },
+    { label: "Contact us", href: "#" },
+  ];
+  
+const Navbar: React.FC = () => {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
+    const toggleMobileMenu = () => {
+      setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+  
+    const toggleDropdown = () => {
+      setIsDropdownOpen(!isDropdownOpen);
+    };
 
   return (
     <nav className=" bg-red-700 text-gray-200">
@@ -40,27 +65,41 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* NAVIGATION - LARGE SCREENS */}
-        <div className="hidden md:flex">
-          <ul className="hidden md:flex">
-          {menuItems.map((item, index) => (
-              <li key={index} className="text-lg pr-8">
+        <div className="hidden md:flex space-x-8">
+            {menuItems.map((item, index) => (
+              <div
+                key={index}
+                className="relative"
+                onMouseEnter={() => item.label === "Projects" && toggleDropdown()}
+                onMouseLeave={() => item.label === "Projects" && toggleDropdown()}
+              >
                 <Link
                   href={item.href}
-                  className="transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500"
+                  className="flex items-center transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500"
                   style={{ textUnderlineOffset: "8px" }}
                 >
-                  {item.label}
+                  {item.label}{item.label === "Projects" && (
+                  <FaAngleDown className="ml-1 text-xl" /> // Add the dropdown icon
+                )}
                 </Link>
-              </li>
+                {item.label === "Projects" && isDropdownOpen && (
+                  <div className="absolute top-full left-0 w-40 bg-white rounded-lg shadow-lg py-2 z-10">
+                    {item.dropdownItems?.map((dropdownItem, i) => (
+                      <Link key={i} href={dropdownItem.href} className="block px-4 text-gray-900 py-2 hover:bg-red-700 hover:text-white">
+                        {dropdownItem.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
-          </ul>
-        </div>
+          </div>
 
         <div className="hidden md:flex mr-10">
-          <Link href="/">
-            <FaFacebook className="text-3xl pr-3 transition duration-300 focus:text-yellow-500 hover:text-yellow-500" />
+          <Link href="https://www.facebook.com/TrustholdGroup" target="_blank">
+            <FaFacebook className="text-3xl pr-3 transition duration-300 focus:text-yellow-500 hover:text-yellow-500 mr-6" />
           </Link>
-          <Link href="/">
+          <Link href="mailto:info@trustholdgroup.com">
             <FaEnvelope className="text-3xl pr-3 transition duration-300 focus:text-yellow-500 hover:text-yellow-500" />
           </Link>
         </div>
