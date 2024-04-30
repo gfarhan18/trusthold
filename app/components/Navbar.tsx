@@ -1,9 +1,8 @@
-// components/Navbar.tsx
-"use client";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+"use client"
+import { useEffect, useRef, useState } from "react";
 import { FaAngleDown, FaBars, FaEnvelope, FaFacebook } from "react-icons/fa";
+import Link from "next/link";
+import Image from "next/image";
 
 interface MenuItem {
   label: string;
@@ -31,8 +30,27 @@ const menuItems: MenuItem[] = [
 ];
 
 const Navbar: React.FC = () => {
+  const logoRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    const animateOnLoad = () => {
+      if (logoRef.current && hamburgerRef.current && navRef.current && mobileMenuRef.current) {
+        logoRef.current.style.animation = "slideInLeft 1s ease-out forwards";
+        hamburgerRef.current.style.animation =
+          "slideInRight 1s ease-out forwards";
+          navRef.current.style.animation = "slideDown 0.5s ease-out forwards";
+          mobileMenuRef.current.style.animation = "slideDown 0.5s ease-out forwards";
+      }
+    };
+
+    animateOnLoad();
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -43,16 +61,21 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className=" bg-red-700 text-gray-200">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center pl-8">
+    <nav 
+    ref={navRef}
+    className="  text-gray-200 absolute top-0 right-0 left-0 z-10 animate-slide-down">
+      <div className="flex justify-between items-center bg-red-700">
+        <div className="flex items-center pl-8" ref={logoRef}>
           <Link href="/">
             <Image src="/logo.png" alt="Logo" width={250} height={60} />
           </Link>
         </div>
 
         {/* MOBILE NAV ICON */}
-        <div className="md:hidden block absolute top-4 right-8">
+        <div
+          className="md:hidden block absolute top-4 right-8"
+          ref={hamburgerRef}
+        >
           <button
             aria-label="navigation"
             type="button"
@@ -113,9 +136,10 @@ const Navbar: React.FC = () => {
       {/* MOBILE MENU */}
       <div
         id="mobileMenu"
-        className={`${
-          isMobileMenuOpen ? "flex" : "hidden"
-        } w-full mx-auto py-8 text-center md:hidden`}
+        className={`mobile-menu overflow-hidden transition-all duration-500 bg-red-700 bg-opacity-75 ${
+          isMobileMenuOpen ? "max-h-screen" : "max-h-0"
+        }`}
+        ref={mobileMenuRef}
       >
         <div className="flex flex-col justify-center items-center w-full">
           {menuItems.map((item, index) => (
@@ -123,7 +147,6 @@ const Navbar: React.FC = () => {
               key={index}
               href={item.href}
               className="block text-gray-200 cursor-pointer py-3 transition duration-300 focus:outline-none focus:text-yellow-500 focus:underline hover:underline hover:text-yellow-500"
-              style={{ textUnderlineOffset: "8px" }}
             >
               {item.label}
             </Link>
